@@ -4,7 +4,7 @@ import random
 # Configurações do jogo
 GAME_WIDTH = 700
 GAME_HEIGHT = 700  # Corrigido o nome
-SPEED = 100
+SPEED = 200
 SPACE_SIZE = 50
 BODY_PARTS = 3
 SNAKE_COLOR = "#00FF00"
@@ -101,6 +101,20 @@ def check_collisions(snake):
 def game_over():
     canvas.delete(ALL)
     canvas.create_text(GAME_WIDTH / 2, GAME_HEIGHT / 2, font=("consolas", 50), text="GAME OVER", fill="red")
+
+def increase_speed():
+    global SPEED 
+    SPEED = max(10, SPEED - 5)  
+
+def next_turn():
+    global x, y  
+    x, y = snake.coordinates[0] 
+
+    if x == food.coordinates[0] and y == food.coordinates[1]: 
+        increase_speed()  # Função anterior
+
+    window.after(SPEED, next_turn)  
+
 
 # Configuração da janela
 window = Tk()
